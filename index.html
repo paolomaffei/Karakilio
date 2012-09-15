@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <style>
-           
-            @import url('sp://karakilio/css/main.css');
-            @import url('sp://karakilio/css/github.css');
-            h1, ul {margin:0 0 30px;}
-            a:hover {color:#83be20;}
-        </style>
-        <script src="js/jquery.min.js"></script>
-        <script src="js/karakilio.js"></script>
-        <script src="js/twilioclient.js"></script>
-		<!--
-        <script src="http://static.twilio.com/libs/twiliojs/1.0/twilio.min.js"></script>
-		-->
-				<script src="js/twilio.js"></script>
- 
+<head>
+<style>
+@import url('sp://import/css/eve.css');
 
-        <!--custom style-->
-        <link rel="stylesheet" href="css/buttons.css" />
-        
-        <script type="text/javascript">
+@import url('sp://import/css/player.css');
+
+@import url('sp://import/css/ui.css');
+
+h1,ul {
+	margin: 0 0 30px;
+}
+
+a:hover {
+	color: #83be20;
+}
+</style>
+<script src="js/jquery.min.js"></script>
+<script src="js/karakilio.js"></script>
+<script src="js/twilioclient.js"></script>
+
+
+
+<!--custom style-->
+<link rel="stylesheet" href="css/buttons.css" />
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/github.css" />
+<script type="text/javascript">
             $(document).ready(function() {
                               // Initialize the Spotify objects
                               var sp = getSpotifyApi(1);
@@ -38,58 +44,163 @@
                               }
                               application = models.application;
                               
-                              
+                              $("#players").hide(); 
                               
                               
                               });
                     </script>
-        
-    </head>
-    <body>
-        <div id="wrapper">
 
+</head>
+<body>
+	<div id="wrapper">
+		<div id="index" class="section">
+			<div id="title">
 
-        <div id="index" class="section">
-<div id="title" >
+				<h1>Karakilio</h1>
 
-            <h1>Karakilio</h1>
+			</div>
             
-        </div>    
-          
-          <div id="selectSong" >
-              <h3> Search and select a Song </h3>
-              <p> <input type="text" value="title" id="songName"/> <button onclick="searchKaraokeSongs()" class="button small green" > Search </button>
-              </br>
-              <div id="spotifyResults">
-                  </div>
-              </div>
-              
-              <div id="players">
-                  
-                   <button href="#lyrics" onclick="getLyrics()" class="button small blue" > Show Lyrics </button>
-                  </div>
-            
-                                              
-    
+            <div id="selectSong">
+				<h3>Search and select a Song</h3>
+				<p>
+                <input type="text" value="title" id="songName" />
+                <button onclick="searchKaraokeSongs()" class="button small green">
+                    Search</button>
+				</p>
+				</br>
+				<div id="spotifyResults"></div>
+			</div>
+			<div id="players" >
+				<h3>Join to the karaoke!</h3>
 
-                
+				<form method="POST"
+					action="http://karakilio.herokuapp.com/api/twilio/conference"
+					onsubmit="return showPlayers();">
 
-        </div><!-- /index -->
+					<div class="round">
+						<p>
+							<label for="phoneNumber1">Phone Number </label><input type="text"
+								value="" id="phoneNumber1" name="p" />
+						</p>
 
-      
-          <div id="lyrics" class="section">
-              
-           <button onclick="launchCall()" class="button small green" > Launch conference call </button>
-              <div id="status">
-                  Connection offline
-              </div>
-                <div id="lyricsM" >
-                    </div>
+					</div>
 
 
-        </div><!-- /tabs -->
+					</br>
+					<div class="round">
+						<p>
+							<label for="phoneNumber2">Phone Number </label><input type="text"
+								value="" id="phoneNumber2" name="p" />
+						</p>
+
+					</div>
+
+					</br>
+					<div class="round">
+						<p>
+							<label for="phoneNumber3">Phone Number </label><input type="text"
+								 id="phoneNumber3" name="p" />
+						</p>
+
+					</div>
 
 
-        </div><!-- /wrapper -->
-    </body>
+					</br>
+					<div class="round">
+						<p>
+							<label for="phoneNumber4">Phone Number </label><input type="text"
+								 id="phoneNumber4" name="p" />
+						</p>
+
+					</div>
+
+
+					</br>
+					<div class="round">
+						<p>
+							<label for="phoneNumber5">Phone Number </label><input type="text"
+								id="phoneNumber5" name="p" />
+						</p>
+
+					</div>
+
+
+					</br>
+					<div class="round">
+						<p>
+							<label for="phoneNumber6">Phone Number </label><input type="text"
+								id="phoneNumber6" name="p" />
+						</p>
+						</p>
+					</div>
+
+
+					</br>
+					<div class="round">
+						<p>
+							<label for="phoneNumber7">Phone Number </label><input type="text"
+								id="phoneNumber7" name="p" />
+						</p>
+						</p>
+					</div>
+
+					</br>
+					<div class="round">
+						<p>
+							<label for="phoneNumber8">Phone Number </label><input type="text"
+								id="phoneNumber8" name="p" />
+						</p>
+						</p>
+					</div>
+
+					</br>
+					<div class="round">
+						<p>
+							<label for="phoneNumber9">Phone Number </label><input type="text"
+								id="phoneNumber9" name="p" />
+						</p>
+						</p>
+					</div>
+
+					</br>
+					<div class="round">
+						<p>
+							<label for="phoneNumber10">Phone Number </label><input
+								type="text" id="phoneNumber10" name="p" />
+						</p>
+						</p>
+					</div>
+
+					<input type="submit" class="button small green"> Search </input> </br>
+				</form>
+
+			</div>
+
+
+
+		
+
+			
+
+
+
+
+
+
+		</div>
+		<!-- /index -->
+
+
+		<div id="lyrics" class="section">
+
+			
+
+
+		</div>
+		<!-- /tabs -->
+
+
+	</div>
+	<!-- /wrapper -->
+</body>
 </html>
