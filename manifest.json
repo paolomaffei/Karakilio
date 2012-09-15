@@ -13,7 +13,7 @@
 	"BundleVersion": "0.1",
 	"DefaultTabs": [
 		{
-			"arguments": "home",
+			"arguments": "index",
 			"title": {
 				"en": "Home"
 			}
