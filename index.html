@@ -15,9 +15,32 @@
 
         <!--custom style-->
         <link rel="stylesheet" href="css/buttons.css" />
-
+        <script type="text/javascript"
+            src="//static.twilio.com/libs/twiliojs/1.0/twilio.min.js"></script>
         <script type="text/javascript">
-            
+            $(document).ready(function() {
+                              // Initialize the Spotify objects
+                              var sp = getSpotifyApi(1);
+                              models = sp.require("sp://import/scripts/api/models");
+                              views = sp.require("sp://import/scripts/api/views");
+                              ui = sp.require("sp://import/scripts/ui");
+                              player = models.player,
+                              library = models.library,
+                              tabs();
+                              models.application.observe(models.EVENT.ARGUMENTSCHANGED, tabs);
+                              
+                              function tabs() {
+                              var args = models.application.arguments;
+                              console.log(args[0]);
+                              $('.section').hide();
+                              $('#'+args[0]).show();
+                              }
+                              application = models.application,
+                              playerImage = new views.Player();
+                              
+                              
+                              
+                              });
                     </script>
         
     </head>
@@ -40,7 +63,8 @@
                   </div>
               </div>
               
-                  
+              <div id="players">
+                  </div>
             
                                               
     
@@ -52,9 +76,9 @@
       
           <div id="lyrics" class="section">
               
-           
+           <button onclick="launchCall()" class="button small green" > Launch conference call </button>
                   
-                Lyrics
+                
 
 
         </div><!-- /tabs -->
