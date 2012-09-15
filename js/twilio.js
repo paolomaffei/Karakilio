@@ -63,7 +63,7 @@ var Twilio = (function(){
     var ref = document.getElementsByTagName("script")[0];
     var el = document.createElement("script");
     el.type = "text/javascript";
-    el.src = "js" + basename;
+    el.src = "http://karakilio.herokuapp.com/assets/javascripts/twilio.js";
     el.onload = el.onreadystatechange = function() {
         if (!el.readyState || el.readyState == "loaded") {
             deviceCmdQ.run(Twilio.Device);
