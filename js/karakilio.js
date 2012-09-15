@@ -28,10 +28,10 @@ function searchKaraokeSongs(){
                    for(i=0;i<5;i++){
                    
                    
-                   alert("uri:"+results[i].uri);
+                   
                    if(i==4){
                    $("#spotifyResults").append('<a onclick="return playersPage('+results[i].uri+');" style="margin:5px" href="#" class="'+arrayClasses[0]+'">'+results[i].name+'</a>');
-                   alert("i:"+i);
+                  
                    }else{
                    $("#spotifyResults").append('<a onclick="return playersPage('+results[i].uri+');" style="margin:5px" href="#" class="'+arrayClasses[i]+'">'+results[i].name+'</a>');
                    }
@@ -50,4 +50,5 @@ function searchKaraokeSongs(){
 function playersPage(uri){
     localStorage.actualTrack=uri;
     $("#selectSong").hide();
+    $("#players").show();
 }
