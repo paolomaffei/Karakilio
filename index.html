@@ -15,8 +15,25 @@
         <!--custom style-->
         <link rel="stylesheet" href="sp://karakilio/css/style.css" />
 
-        <script>
-            
+        <script type="text/javascript">
+            // Initialize the Spotify objects
+var sp = getSpotifyApi(1),
+	models = sp.require("sp://import/scripts/api/models"),
+	views = sp.require("sp://import/scripts/api/views"),
+	ui = sp.require("sp://import/scripts/ui");
+	player = models.player,
+	library = models.library,
+	application = models.application,
+	playerImage = new views.Player();
+         tabs();
+                models.application.observe(models.EVENT.ARGUMENTSCHANGED, tabs);
+
+                function tabs() {
+                    var args = models.application.arguments;
+                    console.log(args[0]);
+                    $('.section').hide();
+                    $('#'+args[0]).show();
+                }
             
                     </script>
         
@@ -31,7 +48,7 @@
             <h1>Karakilio</h1>
             
             
-                </div>
+           Hello
           
               
                   
@@ -48,7 +65,7 @@
               
            
                   
-                
+                Lyrics
 
 
         </div><!-- /tabs -->
