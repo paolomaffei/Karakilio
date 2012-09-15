@@ -17,32 +17,7 @@
         <link rel="stylesheet" href="css/button.css" />
 
         <script type="text/javascript">
-            var search;
-            var models;
-            var views;
-            var ui;
-            $(document).ready(function() {
-            // Initialize the Spotify objects
-                              var sp = getSpotifyApi(1);
-                              models = sp.require("sp://import/scripts/api/models");
-                              views = sp.require("sp://import/scripts/api/views");
-	ui = sp.require("sp://import/scripts/ui");
-	player = models.player,
-	library = models.library,
-        tabs();
-                models.application.observe(models.EVENT.ARGUMENTSCHANGED, tabs);
-
-                function tabs() {
-                    var args = models.application.arguments;
-                    console.log(args[0]);
-                    $('.section').hide();
-                    $('#'+args[0]).show();
-                }
-	application = models.application,
-	playerImage = new views.Player();
-                             
-         
-             });
+            
                     </script>
         
     </head>
