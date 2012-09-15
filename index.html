@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            @import url('sp://import/css/eve.css');
+            @import url('sp://import/css/player.css');
+            @import url('sp://import/css/ui.css');
+            @import url('sp://scores4u/css/main.css');
+            @import url('sp://scores4u/css/github.css');
+            h1, ul {margin:0 0 30px;}
+            a:hover {color:#83be20;}
+        </style>
+        <script src="sp://scores4u/js/jquery.min.js"></script>
+        <script src="sp://scores4u/js/rainbow-custom.min.js"></script>
+         
+       
+        
+        <script src="score4u.js"></script>
+        <!-- VexFlow Uncompiled Sources -->
+        <script src="src/header.js"></script>
+        <script src="src/vex.js"></script>
+        <script src="src/flow.js"></script>
+        <script src="src/tables.js"></script>
+        <script src="src/fonts/vexflow_font.js"></script>
+        <script src="src/glyph.js"></script>
+        <script src="src/stave.js"></script>
+        <script src="src/staveconnector.js"></script>
+        <script src="src/tabstave.js"></script>
+        <script src="src/tickcontext.js"></script>
+        <script src="src/tickable.js"></script>
+        <script src="src/note.js"></script>
+        <script src="src/barnote.js"></script>
+        <script src="src/ghostnote.js"></script>
+        <script src="src/stavenote.js"></script>
+        <script src="src/tabnote.js"></script>
+        <script src="src/beam.js"></script>
+        <script src="src/voice.js"></script>
+        <script src="src/voicegroup.js"></script>
+        <script src="src/modifier.js"></script>
+        <script src="src/modifiercontext.js"></script>
+        <script src="src/accidental.js"></script>
+        <script src="src/dot.js"></script>
+        <script src="src/formatter.js"></script>
+        <script src="src/stavetie.js"></script>
+        <script src="src/tabtie.js"></script>
+        <script src="src/tabslide.js"></script>
+        <script src="src/bend.js"></script>
+        <script src="src/vibrato.js"></script>
+        <script src="src/annotation.js"></script>
+        <script src="src/articulation.js"></script>
+        <script src="src/tuning.js"></script>
+        <script src="src/stavemodifier.js"></script>
+        <script src="src/keysignature.js"></script>
+        <script src="src/timesignature.js"></script>
+        <script src="src/clef.js"></script>
+        <script src="src/music.js"></script>
+        <script src="src/keymanager.js"></script>
+        <script src="src/renderer.js"></script>
+        <script src="src/raphaelcontext.js"></script>
+        <script src="src/stavevolta.js"></script>
+        <script src="src/staverepetition.js"></script>
+        <script src="src/stavebarline.js"></script>
+        <script src="src/stavesection.js"></script>
+        <script src="src/stavehairpin.js"></script>
+        <script src="src/stavetempo.js"></script>
+        <script src="src/tremolo.js"></script>
+        <script src="js/cloud-composer.js"></script>
+
+        <!--custom style-->
+        <link rel="stylesheet" href="sp://scores4u/css/style.css" />
+
+        <script>
+            
+            var idScore=''; //Id actual score
+            var secret='';
+            var numPages='';
+            var actualPage='';
+           
+            var player;
+            var models;
+            
+            $(document).ready(function() {
+                sp = getSpotifyApi(1);
+               models = sp.require('sp://import/scripts/api/models');
+         
+                
+
+                tabs();
+                models.application.observe(models.EVENT.ARGUMENTSCHANGED, tabs);
+
+                function tabs() {
+                    var args = models.application.arguments;
+                    console.log(args[0]);
+                    $('.section').hide();
+                    $('#'+args[0]).show();
+                }
+                              
+                              player= models.player;
+                              
+                              // Get the track that is currently playing
+                              var currentTrack = player.track;
+                              var artistsArray = new Array();
+                              artistsArray=currentTrack.artists;
+                            var currentHTML = document.getElementById('Current Track');
+                               // if nothing currently playing
+                              if (currentTrack == null) {
+                              currentHTML.innerHTML = 'No track currently playing';
+                              } else {
+                              currentHTML.innerHTML = 'Now playing: ' + currentTrack;
+                              }
+                              
+                             getScoreMuseScore(artistsArray[0].name,currentTrack.name);
+                             player.observe(models.EVENT.CHANGE, function (e) {
+
+                         		// Only update the page if the track changed
+                         		if (e.data.curtrack == true) {
+                         		
+                         			var currentHTML = document.getElementById('Current Track');
+                                    // if nothing currently playing
+                                   if (player.track == null) {
+                                   currentHTML.innerHTML = 'No track currently playing';
+                                   } else {
+                                   currentHTML.innerHTML = 'Now playing: ' + player.track;
+                                   }
+                         			getScoreMuseScore(player.track.album.artist.name,player.track.name);
+                         		}
+                         	});
+                              
+
+            });
+            
+            
+            
+            
+            function getScoreMuseScore(artist, title){
+               
+                text=encodeURIComponent(''+artist+' '+title);
+                var url='http://api.musescore.com/services/rest/score.jsonp?text='+text+'&oauth_consumer_key=musichackday&callback=tt';
+                
+                
+                
+                $.ajax({
+                       url: url,
+                       dataType: "jsonp",
+                       success: function(data, textStatus, jqXHR){
+                       if(data!=null){
+                       idScore=data[0].id;
+                       secret=data[0].secret;
+                       numPages=data[0].metadata.pages-1;
+                       actualPage=0;
+                       
+                       showScore(data[0].id);
+                       }
+                       else{
+                       $("#score2").empty();
+                       $("#score2").append("<h4> We don't find the score.....do you want to write it?</h4>");
+                       $("#score2").append('<input type="button" value="Write Score" onclick="write()" />');
+                       
+                       }
+                       
+                       },
+                       error: function(jqXHR, textStatus, errorThrown){
+                       alert('login error: ' + textStatus);
+                       }
+                       });
+                
+                
+                
+            }   
+            
+            function showScore(id){
+                $("#scorePng").empty();
+                $("#scorePng").append("<img src='http://static.musescore.com/"+idScore+"/"+secret+"/score_"+actualPage+".png'/>");
+                $("#count").empty();
+                $("#count").append("Page: "+(actualPage+1)+" of "+(numPages+1));
+                
+            }
+            function prev(){
+                if(actualPage!=0){
+                    actualPage--;
+                    $("#scorePng").empty();
+                    $("#scorePng").append("<img src='http://static.musescore.com/"+idScore+"/"+secret+"/score_"+actualPage+".png'/>");
+                    $("#count").empty();
+                    $("#count").append("Page: "+(actualPage+1)+" of "+(numPages+1));
+                }
+                
+            }
+            function next(){
+                if(actualPage!=numPages){
+                    actualPage++;
+                    $("#scorePng").empty();
+                    $("#scorePng").append("<img src='http://static.musescore.com/"+idScore+"/"+secret+"/score_"+actualPage+".png'/>");
+                    $("#count").empty();
+                    $("#count").append("Page: "+(actualPage+1)+" of "+(numPages+1));
+                }
+            }
+            
+         
+          
+                    </script>
+        
+    </head>
+    <body>
+        <div id="wrapper">
+
+
+        <div id="index" class="section">
+
+
+            <h1>Scores4u</h1>
+            
+            <p id="Current Track"></p>
+            <p id="Artist"> </p>
+            <div id="score2">
+                <div style="text-align:center">
+                    <input type="button" value="Prev" onclick="prev()" />
+                    <span id="count"></span>
+                     <input type="button" value="Next" onclick="next()" />
+                    
+                    </div>
+                <div id="scorePng">
+            
+                    </div>
+                </div>
+          
+              
+                  
+            
+                                              
+    
+
+                
+
+        </div><!-- /index -->
+
+      
+          <div id="writer" class="section">
+              
+              <div style="background-color:#FFFFFF">
+                  
+                  <canvas id="scoreCanvas" height="400" width="800"></canvas>
+              </div>
+              <button onclick="initWriter();">init</button>
+              <button onclick="draw();">draw</button>
+              <button onclick="scrollLeft();">left</button>
+              <button onclick="scrollRight();">right</button>
+              <button onclick="changePitch(1);">up</button>
+              <button onclick="changePitch(-1);">down</button>
+              <button onclick="validateNote();">enter</button>
+
+
+        </div><!-- /tabs -->
+
+
+        </div><!-- /wrapper -->
+    </body>
+</html>
