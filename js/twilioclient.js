@@ -13,7 +13,7 @@ function launchCall() {
 //so we call a page on a server that can execute serverside code
 //another solution was to generate a life-long token once and hardcode it here, with pretty much the same security anyway...
 function getToken() {
-	var url="http://3mxe.localtunnel.com/api/twilio/capability";
+	var url="http://3mxe.localtunnel.com/api/twilio/capability?callback=xxx";
 	url=encodeURI(url);
 				
 	$.ajax({
@@ -33,4 +33,28 @@ function getToken() {
 
 function makeCall(token) {
 	alert(token)
+	
+	Twilio.Device.setup("<?php echo $token->generateToken();?>");
+	
+	Twilio.Device.ready(function (device) {
+		$('#status').text('Ready to join conference');
+		Twilio.Device.connect();
+	});
+	
+	Twilio.Device.offline(function (device) {
+		$('#status').text('Connection offline');
+	});
+	
+	Twilio.Device.error(function (error) {
+		$('#status').text(error);
+	});
+	
+	Twilio.Device.connect(function (conn) {
+		$('#status').text("Successfully joined conference");
+	});
+	
+	Twilio.Device.disconnect(function (conn) {
+		$('#status').text("Disconnected");
+	});
+	
 }
