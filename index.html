@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="sp://karakilio/css/style.css" />
 
         <script type="text/javascript">
+            $(document).ready(function() {
             // Initialize the Spotify objects
 var sp = getSpotifyApi(1),
 	models = sp.require("sp://import/scripts/api/models"),
@@ -23,9 +24,7 @@ var sp = getSpotifyApi(1),
 	ui = sp.require("sp://import/scripts/ui");
 	player = models.player,
 	library = models.library,
-	application = models.application,
-	playerImage = new views.Player();
-         tabs();
+        tabs();
                 models.application.observe(models.EVENT.ARGUMENTSCHANGED, tabs);
 
                 function tabs() {
@@ -34,7 +33,10 @@ var sp = getSpotifyApi(1),
                     $('.section').hide();
                     $('#'+args[0]).show();
                 }
-            
+	application = models.application,
+	playerImage = new views.Player();
+         
+             });
                     </script>
         
     </head>
