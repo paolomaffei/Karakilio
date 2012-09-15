@@ -3,24 +3,29 @@
     <head>
         <style>
            
-            @import url('sp://scores4u/css/main.css');
-            @import url('sp://scores4u/css/github.css');
+            @import url('sp://karakilio/css/main.css');
+            @import url('sp://karakilio/css/github.css');
             h1, ul {margin:0 0 30px;}
             a:hover {color:#83be20;}
         </style>
-        <script src="sp://karakilio/js/jquery.min.js"></script>
+        <script src="js/jquery.min.js"></script>
+         <script src="js/karakilio.js"></script>
        
  
 
         <!--custom style-->
-        <link rel="stylesheet" href="sp://karakilio/css/style.css" />
+        <link rel="stylesheet" href="css/button.css" />
 
         <script type="text/javascript">
+            var search;
+            var models;
+            var views;
+            var ui;
             $(document).ready(function() {
             // Initialize the Spotify objects
-var sp = getSpotifyApi(1),
-	models = sp.require("sp://import/scripts/api/models"),
-	views = sp.require("sp://import/scripts/api/views"),
+                              var sp = getSpotifyApi(1);
+                              models = sp.require("sp://import/scripts/api/models");
+                              views = sp.require("sp://import/scripts/api/views");
 	ui = sp.require("sp://import/scripts/ui");
 	player = models.player,
 	library = models.library,
@@ -35,6 +40,7 @@ var sp = getSpotifyApi(1),
                 }
 	application = models.application,
 	playerImage = new views.Player();
+                              search = new models.Search(name);
          
              });
                     </script>
@@ -45,13 +51,19 @@ var sp = getSpotifyApi(1),
 
 
         <div id="index" class="section">
-
+<div id="title" >
 
             <h1>Karakilio</h1>
             
-            
-           Hello
+        </div>    
           
+          <div id="selectSong" >
+              <h3> Search and select a Song </h3>
+              <p> <input type="text" value="title" id="songName"/> <button onclick="searchKaraokeSongs()" class="button medium green" > Search </button>
+              </br>
+              <div id="spotifyResults">
+                  </div>
+              </div>
               
                   
             
