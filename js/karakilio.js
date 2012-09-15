@@ -8,8 +8,7 @@ function searchKaraokeSongs(){
     name=name+" karaoke version";
     var sp = getSpotifyApi(1);
     models = sp.require("sp://import/scripts/api/models");
-    views = sp.require("sp://import/scripts/api/views");
-    ui = sp.require("sp://import/scripts/ui");
+   
     var search = new models.Search(name);
     search.localResults = models.LOCALSEARCHRESULTS.APPEND;
     
@@ -59,7 +58,7 @@ function getLyrics(uri){
            dataType: "json",
            success: function(data, textStatus, jqXHR){
            if(data!=null){
-           alert("data"+data);
+           
            var id=data.message.body.track_list[0].track.track_id;
            console.log(id);
            fillMusixMatch(id);
