@@ -4,7 +4,7 @@ function searchKaraokeSongs(){
     
     search.localResults = models.LOCALSEARCHRESULTS.APPEND;
     
-   
+    search = new models.Search(name);
     
     search.observe(models.EVENT.CHANGE, function() {
                    var results = search.tracks;
