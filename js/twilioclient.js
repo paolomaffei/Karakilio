@@ -13,7 +13,7 @@ function launchCall() {
 //so we call a page on a server that can execute serverside code
 //another solution was to generate a life-long token once and hardcode it here, with pretty much the same security anyway...
 function getToken() {
-	var url="http://3mxe.localtunnel.com/api/twilio/capability?callback=xxx";
+	var url="http://3mxe.localtunnel.com/api/twilio/capability";
 	url=encodeURI(url);
 				
 	$.ajax({
