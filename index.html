@@ -25,10 +25,8 @@
                               // Initialize the Spotify objects
                               var sp = getSpotifyApi(1);
                               models = sp.require("sp://import/scripts/api/models");
-                              views = sp.require("sp://import/scripts/api/views");
-                              ui = sp.require("sp://import/scripts/ui");
-                              player = models.player,
-                              library = models.library,
+                              
+                              
                               tabs();
                               models.application.observe(models.EVENT.ARGUMENTSCHANGED, tabs);
                               
