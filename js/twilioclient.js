@@ -34,7 +34,7 @@ function getToken() {
 function makeCall(token) {
 	alert(token)
 	
-	Twilio.Device.setup("<?php echo $token->generateToken();?>");
+	Twilio.Device.setup(token);
 	
 	Twilio.Device.ready(function (device) {
 		$('#status').text('Ready to join conference');
