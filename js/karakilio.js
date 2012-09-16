@@ -142,6 +142,8 @@ function fillMusixMatch(id) {
 function showLyrics(lyricsData) {
     
     var krly='[';
+    
+    //Get start time for first line
   
     line=lyricsData[1];
     var time=lyricsData[1].split("]");
@@ -153,6 +155,7 @@ function showLyrics(lyricsData) {
   
     var startTime=''+sec+'.'+secs[1];
     
+    //Get finish time for first line
     
     var time2=lyricsData[2].split("]");
     var timeAr2=time2[0].split(':');
@@ -165,6 +168,9 @@ function showLyrics(lyricsData) {
     var i=2;
     line=lyricsData[2];
     krly=' ['+ startTime+' , '+startTimeNext +', [ [ 0, '+time[1]+' ] ] ]';
+    
+    //Do the same for the rest of the lines
+    
  while(typeof(line) != 'undefined'){
      
      var time=line.split("]");
