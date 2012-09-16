@@ -258,7 +258,7 @@ function sendLyrics(){
 function startSong(){
     
     window.location='spotify:app:karakilio:lyrics';
-    showLyrics(lyricsSong);
+    
     
     var sp = getSpotifyApi(1);
     var models = sp.require("sp://import/scripts/api/models");
@@ -269,12 +269,20 @@ function startSong(){
     var playlist = new models.Playlist();
     playlist.add(track);
     var playerView = new views.Player();
-    playerView.track = track; // Don't play the track right away
+    playerView.track = track ; // Don't play the track right away
+  
     playerView.context = playlist;
     
     /* Pass the player HTML code to the #player <div /> */
     var playerHTML = document.getElementById('player');
     playerHTML.appendChild(playerView.node);
+    
+    var player=models.player;
+     player.track=track;
+    player.playing=true;
+   
+    setTimeout(function() {showLyrics(lyricsSong);},600);
+    
     
     
 }
