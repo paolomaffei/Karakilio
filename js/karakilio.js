@@ -179,7 +179,7 @@ function lyricsToKRL(timings2) {
 
 function showLyrics(lyricsData) {
     var timings = lyricsToKRL(lyricsData);
-	var numDisplayLines = 2;
+	var numDisplayLines = 1;
 	var karaoke = new RiceKaraoke(timings);
 	var renderer = new SimpleKaraokeDisplayEngine('karaoke-display',
 			numDisplayLines);
