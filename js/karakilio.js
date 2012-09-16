@@ -42,8 +42,10 @@ function searchKaraokeSongs() {
 }
 
 var actualTrack = "";
+var uriA="";
 
 function getLyrics(uri) {
+    uriA=uri;
 
 	var title = $("#songName").val()
 	title = encodeURI(title);
@@ -208,7 +210,7 @@ function showPlayers() {
 
 function sendLyrics(){
     
-    numbers=document.getElementsByName("p").value;
+    numbers=document.getElementsByName("p");
     array=arrayLyrics;
     
     for(i=0;i<numbers.length;i++){
@@ -225,7 +227,7 @@ function sendLyrics(){
             
         }
         
-        var dataS="From=+442033223006&To="+numbers[i]+"&Body="+body;
+        var dataS="From=+442033223006&To="+numbers[i].value+"&Body="+body;
         $.ajax({
                url : url,
                dataS: data,
@@ -247,5 +249,11 @@ function sendLyrics(){
     
     
     
+    
+}
+
+
+
+function startsong(){
     
 }
