@@ -3,9 +3,7 @@
 <head>
 <style>
 @import url('sp://import/css/eve.css');
-
 @import url('sp://import/css/player.css');
-
 @import url('sp://import/css/ui.css');
 
 h1,ul {
@@ -63,26 +61,24 @@ a:hover {
             <div id="selectSong">
 				<h3>Search and select a Song</h3>
 				<p>
-                <input type="text" value="title" id="songName" />
-                <button onclick="searchKaraokeSongs()" class="button small green">
-                    Search</button>
+                	<input type="text" value="title" id="songName" />
+                	<button onclick="searchKaraokeSongs()" class="button small green"> Search</button>
 				</p>
 				</br>
+				
 				<div id="spotifyResults"></div>
+				
 			</div>
+			
+
 			<div id="players" >
 				<h3>Join to the karaoke!</h3>
-
-				<form method="POST"
-					action="http://karakilio.herokuapp.com/api/twilio/conference"
-					onsubmit="return showPlayers();">
 
 					<div class="round">
 						<p>
 							<label for="phoneNumber1">Phone Number </label><input type="text"
 								value="" id="phoneNumber1" name="p" />
 						</p>
-
 					</div>
 
 
@@ -92,7 +88,6 @@ a:hover {
 							<label for="phoneNumber2">Phone Number </label><input type="text"
 								value="" id="phoneNumber2" name="p" />
 						</p>
-
 					</div>
 
 					</br>
@@ -101,7 +96,6 @@ a:hover {
 							<label for="phoneNumber3">Phone Number </label><input type="text"
 								 id="phoneNumber3" name="p" />
 						</p>
-
 					</div>
 
 
@@ -111,7 +105,6 @@ a:hover {
 							<label for="phoneNumber4">Phone Number </label><input type="text"
 								 id="phoneNumber4" name="p" />
 						</p>
-
 					</div>
 
 
@@ -172,8 +165,7 @@ a:hover {
 					</div>
 
 					<button class="button small green" onclick="sendNumbers()" > Search </button> </br>
-				</form>
-
+				
 			</div>
 
 
@@ -182,9 +174,6 @@ a:hover {
 
 
 		<div id="lyrics" class="section">
-
-			
-
 
 		</div>
 		<!-- /tabs -->
