@@ -73,7 +73,7 @@ var subtitle=data.message.body.track_list[0].track.has_subtitles;
            }
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert('login error: ' + textStatus);
+			console.log('login error: ' + textStatus);
 		}
 	});
     
@@ -102,7 +102,7 @@ function getLyricsTest(title) {
            }
            },
            error : function(jqXHR, textStatus, errorThrown) {
-           alert('login error: ' + textStatus);
+           console.log('login error: ' + textStatus);
            }
            });
     
@@ -128,13 +128,13 @@ function fillMusixMatch(id) {
            lyricsSong=lyrics;
     //showLyrics(lyrics);
 			} else {
-				alert("data null");
+				console.log("data null");
 
 			}
 
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert('login error: ' + textStatus);
+			console.log('login error: ' + textStatus);
 		}
 	});
 
@@ -239,7 +239,7 @@ function sendLyrics(){
                
                },
                error : function(jqXHR, textStatus, errorThrown) {
-               alert('login error: ' + textStatus);
+               console.log('login error: ' + textStatus);
                }
                });
         
@@ -257,6 +257,7 @@ function sendLyrics(){
 
 function startSong(){
     
+    window.location='spotify:app:karakilio:lyrics';
     showLyrics(lyricsSong);
     
     var sp = getSpotifyApi(1);

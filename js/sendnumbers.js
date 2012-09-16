@@ -2,7 +2,7 @@
 function sendNumbers() {
 	numbers=document.getElementsByName("p");
    
-	alert(numbers);
+	console.log(numbers);
 	var listP="p="+numbers[0].value;
 	
 	for(i=1;i<numbers.length;i++) {
@@ -27,7 +27,7 @@ function sendNumbers() {
 		},
 
 		error: function(jqXHR, textStatus, errorThrown){
-			alert("couldn't send numbers: " + textStatus);
+			console.log("couldn't send numbers: " + textStatus);
 		}
 	});
 }
@@ -49,7 +49,7 @@ function retrieveSongURL() {
 		},
 
 		error: function(jqXHR, textStatus, errorThrown){
-			alert("couldn't send numbers: " + textStatus);
+			console.log("couldn't send numbers: " + textStatus);
 		}
 	});
 }
