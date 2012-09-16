@@ -229,6 +229,6 @@ function showPlayers() {
 }
 
 
-getCompleteLyrics(){
+function getCompleteLyrics(){
     
 }
