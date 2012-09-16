@@ -21,7 +21,11 @@ function sendNumbers() {
 		data: listP,
 		//dataType: "jsonp",
 		success: function(data, textStatus, jqXHR){
+<<<<<<< HEAD
      		sendLyrics();
+=======
+     		//
+>>>>>>> 32d372cd63d444e7891d7baf5ec0923538ad73fc
 		},
 
 		error: function(jqXHR, textStatus, errorThrown){
@@ -32,9 +36,21 @@ function sendNumbers() {
 
 
 
-function showLyrics() {
+function retrieveSongURL() {
+	var url="http://karakilio.herokuapp.com/api/twilio/recordings";
 	
-}
+	url=encodeURI(url);
 
-//POST http://karakilio.herokuapp.com/api/twilio/conference
-//p=2243243243&p=3432432443&p=4343243&p=&p=&p=&p=&p=&p=&p=
+	$.ajax({
+		url: url,
+		dataType: "json",
+		success: function(data, textStatus, jqXHR){
+     		var last = data.length-1;
+     		var songURL = data[last].recordingData.RecordingUrl;
+		},
+
+		error: function(jqXHR, textStatus, errorThrown){
+			alert("couldn't send numbers: " + textStatus);
+		}
+	});
+}
