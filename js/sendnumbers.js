@@ -1,0 +1,3 @@
+function sendNumbers() {
+	alert("ok");
+}
