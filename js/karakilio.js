@@ -37,6 +37,7 @@ function searchKaraokeSongs() {
 	});
 
 	search.appendNext();
+   
 
 }
 
@@ -54,18 +55,57 @@ function getLyrics(uri) {
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
 			if (data != null) {
-
-				var id = data.message.body.track_list[0].track.track_id;
+var subtitle=data.message.body.track_list[0].track.has_subtitles;
+           var i=0;
+           while(subtitle==0 && typeof(data.message.body.track_list[i])!= 'undefined'){
+           i++;
+           if(typeof(data.message.body.track_list[i])!= 'undefined'){
+           subtitle=data.message.body.track_list[i].track.has_subtitles;
+           }}
+           if(subtitle!=0){
+				var id = data.message.body.track_list[i].track.track_id;
 				console.log(id);
 				fillMusixMatch(id);
-			}
+           }
+           
+           }
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
 			alert('login error: ' + textStatus);
 		}
 	});
+    
+     showPlayers();
 
 }
+
+
+function getLyricsTest(title) {
+    
+	//var title = $("#songName").val()
+	title = encodeURI(title);
+	var url_search = "http://api.musixmatch.com/ws/1.1/track.search?apikey=8199f8199755eeaca66a70ce0263110e&q_track="
+    + title + "&f_has_subtitles=1&format=jsonp&callback=rr";
+    
+	$.ajax({
+           url : url_search,
+           dataType : "jsonp",
+           success : function(data, textStatus, jqXHR) {
+           if (data != null) {
+           
+           var id = data.message.body.track_list[0].track.track_id;
+           console.log(id);
+           fillMusixMatch(id);
+           }
+           },
+           error : function(jqXHR, textStatus, errorThrown) {
+           alert('login error: ' + textStatus);
+           }
+           });
+    
+}
+
+
 
 function fillMusixMatch(id) {
 
@@ -78,11 +118,14 @@ function fillMusixMatch(id) {
 		success : function(data, textStatus, jqXHR) {
 			if (data != null) {
 
-				$("#lyricsM").empty();
-				$("#lyricsM").append('<div><p>');
-
-				$("#lyricsM").append(data.message.body.subtitle.subtitle_body);
-				$("#lyricsM").append('</div>');
+				$("#lyricsMTest").empty();
+				$("#lyricsMTest").append('<div><p>');
+           var lyrics=data.message.body.subtitle.subtitle_body;
+           var lyricsArray=lyrics.split("[");
+           alert(lyricsArray[1]);
+				$("#lyricsMTest").append(data.message.body.subtitle.subtitle_body);
+				$("#lyricsMTest").append('</div>');
+           showLyrics(lyricsArray);
 			} else {
 				alert("data null");
 
@@ -96,11 +139,69 @@ function fillMusixMatch(id) {
 
 }
 
-function showLyrics() {
+function showLyrics(lyricsData) {
+    
+    var krly='[';
+  
+    line=lyricsData[1];
+    var time=lyricsData[1].split("]");
+    var timeAr=time[0].split(':');
+    min=timeAr[0];
+    var secs=timeAr[1].split('.');
+    
+    sec=parseInt(secs[0])+parseInt(min*60);
+  
+    var startTime=''+sec+'.'+secs[1];
+    
+    
+    var time2=lyricsData[2].split("]");
+    var timeAr2=time2[0].split(':');
+    min2=timeAr2[0];
+    var secs2=timeAr2[1].split('.');
+    
+    sec2=parseInt(secs2[0])+parseInt(min2*60);
+    
+    var startTimeNext=''+sec2+'.'+secs2[1];
+    var i=2;
+    line=lyricsData[2];
+    krly=' ['+ startTime+' , '+startTimeNext +', [ [ 0, '+time[1]+' ] ] ]';
+ while(typeof(line) != 'undefined'){
+     
+     var time=line.split("]");
+     var timeAr=time[0].split(':');
+     min=timeAr[0];
+     var secs=timeAr[1].split('.');
+     
+     sec=parseInt(secs[0])+parseInt(min*60);
+     
+     var startTime=''+sec+'.'+secs[1];
+     if(typeof(lyricsData[i+1])!='undefined'){
+     
+     var time2=lyricsData[i+1].split("]");
+     var timeAr2=time2[0].split(':');
+     min2=timeAr2[0];
+     var secs2=timeAr2[1].split('.');
+     
+     sec2=parseInt(secs2[0])+parseInt(min2*60);
+     
+         var startTimeNext=''+sec2+'.'+secs2[1];}
+     else{
+         sec=sec+3;
+         var startTimeNext=''+sec+'.'+secs[1];
+     }
+      krly=krly+', ['+ startTime +', '+startTimeNext +', [ [ 0, '+time[1]+' ] ]]';
+     i++;
+     line=lyricsData[i];
+    }
+    krly=krly+']';
+    //alert(krly);
+    krlyO= [ krly ];
+    
+    console.log(krlyO);
 	var numDisplayLines = 2;
-	var timings = RiceKaraoke.simpleTimingToTiming([ [ 1.35, 3.07,
-			[ [ 0, "What " ], [ 0.07, "is " ], [ 0.28, "love" ] ] ] ]); // Simple KRL -> KRL
-
+	var timings = RiceKaraoke.simpleTimingToTiming(krlyO); // Simple KRL -> KRL
+    //[ [ 1.35, 3.07,
+    //[ [ 0, "What " ], [ 0.07, "is " ], [ 0.28, "love" ] ] ] ]
 	var karaoke = new RiceKaraoke(timings);
 	var renderer = new SimpleKaraokeDisplayEngine('karaoke-display',
 			numDisplayLines);
@@ -124,5 +225,10 @@ function showPlayers() {
     
 	$("#selectSong").hide();
 	$("#players").show();
-    return false;
+   
+}
+
+
+getCompleteLyrics(){
+    
 }

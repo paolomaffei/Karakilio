@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+
+h1,ul {
+	margin: 0 0 30px;
+}
+
+a:hover {
+	color: #83be20;
+}
+</style>
+<script src="js/jquery.min.js"></script>
+<script src="js/karakilio.js"></script>
+   <script src="js/ricekaraoke.js"></script> 
+
+   <script src="js/simplekaraokedisplay.js"></script> 
+
+
+<!--custom style-->
+<link rel="stylesheet" href="css/buttons.css" />
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/github.css" />
+<script type="text/javascript">
+            $(document).ready(function() {
+                              // Initialize the Spotify objects
+                             
+                              
+                              $("#players").hide(); 
+                              
+                              
+                              });
+                    </script>
+
+</head>
+<body>
+	<div id="wrapper">
+		<div id="index" class="section">
+			<div id="title">
+
+				<h1>Karakilio</h1>
+
+			</div>
+            
+            <div id="selectSong">
+				<h3>Search and select a Song</h3>
+				<p>
+                <input type="text" value="title" id="songName" />
+                <button onclick="getLyricsTest('wonderwall')" class="button small green">
+                    Search</button>
+				</p>
+				</br>
+				<div id="spotifyResults"></div>
+			</div>
+		
+
+
+
+		
+
+			
+
+
+
+
+
+
+		</div>
+		<!-- /index -->
+
+
+		<div id="lyrics" class="section">
+
+			<div id="lyricsMTest"> </div>
+            <div id="karaoke-display"></div>
+
+		</div>
+		<!-- /tabs -->
+
+
+	</div>
+	<!-- /wrapper -->
+</body>
+</html>
