@@ -109,6 +109,7 @@ function getLyricsTest(title) {
 }
 
 
+var lyricsSong="";
 
 function fillMusixMatch(id) {
 
@@ -121,12 +122,11 @@ function fillMusixMatch(id) {
 		success : function(data, textStatus, jqXHR) {
 			if (data != null) {
 
-				$("#lyricsMTest").empty();
-				$("#lyricsMTest").append('<div><p>');
+				
            var lyrics=data.message.body.subtitle.subtitle_body;
-				$("#lyricsMTest").append(lyrics);
-				$("#lyricsMTest").append('</div>');
-           showLyrics(lyrics, id);
+				
+           lyricsSong=lyrics;
+    //showLyrics(lyrics);
 			} else {
 				alert("data null");
 
@@ -146,7 +146,7 @@ function convert(input) {
         seconds = +parts[1];
     return (minutes * 60 + seconds).toFixed(3);
 }
-
+var arrayLyrics=new Array();
 function lyricsToKRL(timings2) {
 	console.log(timings2);
 	var split2 = timings2.split(/\r\n|\r|\n/);
@@ -167,6 +167,7 @@ function lyricsToKRL(timings2) {
 			lineArr.push(parseFloat(convert(split2[line+1].split(/\]/)[0].substring(1))));
 	}
 		var lyricArray = [[0, splitLine[1]]];
+        arrayLyrics[i]=splitLine[1];
 		// push the lyric
 		lineArr.push(lyricArray);
 		arr.push(lineArr);
@@ -219,10 +220,10 @@ function sendLyrics(){
         body="";
         for(j=0;j<array.length; j++){
             if(j>(i-1) && j<i+3){
-                upp=array[i].toUpperCase();
+                upp=array[j].toUpperCase();
                 body=body+upp+"</n>";
             }else{
-                body=body+array[i]+"</n>";
+                body=body+array[j]+"</n>";
             }
             
         }
@@ -230,7 +231,7 @@ function sendLyrics(){
         var dataS="From=+442033223006&To="+numbers[i].value+"&Body="+body;
         $.ajax({
                url : url,
-               dataS: data,
+               data: dataS,
                type : 'POST',
                success : function(data, textStatus, jqXHR) {
                
@@ -255,5 +256,24 @@ function sendLyrics(){
 
 
 function startsong(){
+    
+    showLyrics(lyricsSong);
+    
+    var sp = getSpotifyApi(1);
+    var models = sp.require("sp://import/scripts/api/models");
+    var views = sp.require("sp://import/scripts/api/views");
+    
+    var track = models.Track.fromURI(uriA);
+    /* Create a temporary playlist for the song */
+    var playlist = new models.Playlist();
+    playlist.add(track);
+    var playerView = new views.Player();
+    playerView.track = null; // Don't play the track right away
+    playerView.context = playlist;
+    
+    /* Pass the player HTML code to the #player <div /> */
+    var playerHTML = document.getElementById('player');
+    playerHTML.appendChild(playerView.node);
+    
     
 }

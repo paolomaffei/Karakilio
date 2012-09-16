@@ -21,8 +21,8 @@ function sendNumbers() {
 		data: listP,
 		//dataType: "jsonp",
 		success: function(data, textStatus, jqXHR){
-
-     		sendLyrics();
+           startSong();
+     		//sendLyrics();
 
 		},
 
