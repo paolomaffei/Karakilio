@@ -21,11 +21,9 @@ function sendNumbers() {
 		data: listP,
 		//dataType: "jsonp",
 		success: function(data, textStatus, jqXHR){
-<<<<<<< HEAD
+
      		sendLyrics();
-=======
-     		//
->>>>>>> 32d372cd63d444e7891d7baf5ec0923538ad73fc
+
 		},
 
 		error: function(jqXHR, textStatus, errorThrown){
