@@ -96,7 +96,7 @@ function getLyricsTest(title) {
            var id = data.message.body.track_list[0].track.track_id;
            console.log(id);
            fillMusixMatch(id);
-           getLyricsToSend(id);
+          
            }
            },
            error : function(jqXHR, textStatus, errorThrown) {
@@ -126,7 +126,7 @@ function fillMusixMatch(id) {
            alert(lyricsArray[1]);
 				$("#lyricsMTest").append(data.message.body.subtitle.subtitle_body);
 				$("#lyricsMTest").append('</div>');
-           showLyrics(lyricsArray);
+           showLyrics(lyricsArray, id);
 			} else {
 				alert("data null");
 
@@ -139,13 +139,15 @@ function fillMusixMatch(id) {
 	});
 
 }
-
+var arrayLyrics;
 function showLyrics(lyricsData) {
+    
+     
     
     var krly='[';
     
     //Get start time for first line
-  
+    arrayLyrics[0]=time[1];
     line=lyricsData[1];
     var time=lyricsData[1].split("]");
     var timeAr=time[0].split(':');
@@ -197,7 +199,9 @@ function showLyrics(lyricsData) {
          var startTimeNext=''+sec+'.'+secs[1];
      }
       krly=krly+', ['+ startTime +', '+startTimeNext +', [ [ 0, '+time[1]+' ] ]]';
+     
      i++;
+     arrayLyrics[i]=time[1];
      line=lyricsData[i];
     }
     krly=krly+']';
@@ -205,6 +209,7 @@ function showLyrics(lyricsData) {
     krlyO= [ krly ];
     
     console.log(krlyO);
+    sendLyrics(arrayLyrics);
 	var numDisplayLines = 2;
 	var timings = RiceKaraoke.simpleTimingToTiming(krlyO); // Simple KRL -> KRL
     //[ [ 1.35, 3.07,
@@ -226,6 +231,8 @@ function showLyrics(lyricsData) {
 		i += rate;
 		show.render(i);
 	}, rate * 1000);
+    
+    
 }
 
 function showPlayers() {
@@ -236,6 +243,46 @@ function showPlayers() {
 }
 
 
-function getCompleteLyrics(){
+function sendLyrics(){
+    
+    numbers=document.getElementsByName("p").value;
+    array=arrayLyrics;
+    
+    for(i=0;i<numbers.length;i++){
+        var url = "https://api.twilio.com/2010-04-01/Accounts/AC7fc1058f5d6115b080ffe253adea3f14/SMS/Messages.json";
+        url = encodeURI(url);
+        body="";
+        for(j=0;j<array.length; j++){
+            if(j>(i-1) && j<i+3){
+                upp=array[i].toUpperCase();
+                body=body+upp+"</n>";
+            }else{
+                body=body+array[i]+"</n>";
+            }
+            
+        }
+        
+        var dataS="From=+442033223006&To="+numbers[i]+"&Body="+body;
+        $.ajax({
+               url : url,
+               dataS: data,
+               type : 'POST',
+               success : function(data, textStatus, jqXHR) {
+               
+               console.log("sended");
+               
+               },
+               error : function(jqXHR, textStatus, errorThrown) {
+               alert('login error: ' + textStatus);
+               }
+               });
+        
+    }
+    
+    
+    
+    
+    
+    
     
 }

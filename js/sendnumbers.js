@@ -1,5 +1,7 @@
+
 function sendNumbers() {
 	numbers=document.getElementsByName("p");
+   
 	alert(numbers);
 	var listP="p="+numbers[0].value;
 	
@@ -19,7 +21,7 @@ function sendNumbers() {
 		data: listP,
 		//dataType: "jsonp",
 		success: function(data, textStatus, jqXHR){
-     		showLyrics();
+     		sendLyrics();
 		},
 
 		error: function(jqXHR, textStatus, errorThrown){

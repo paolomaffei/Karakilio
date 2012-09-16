@@ -1,36 +1,43 @@
-
-
-function getLyricsToSend(id){
-    var url = "http://api.musixmatch.com/ws/1.1/track.lyrics.get?apikey=8199f8199755eeaca66a70ce0263110e&track_id="
-    + id + "&format=jsonp&callback=rr";
-	url = encodeURI(url);
-	$.ajax({
-           url : url,
-           dataType : "jsonp",
-           success : function(data, textStatus, jqXHR) {
-           if (data != null) {
-           
-           $("#lyricsM").empty();
-           $("#lyricsM").append('<div><p>');
-           
-           $("#lyricsM").append(data.message.body.lyrics.lyrics_body);
-           console.log(data.message.body.lyrics.lyrics_body);
-           $("#lyricsM").append('</div>');
-           sendLyrics();
-           } else {
-           alert("data null");
-           
-           }
-           
-           },
-           error : function(jqXHR, textStatus, errorThrown) {
-           alert('login error: ' + textStatus);
-           }
-           });
+function sendLyrics(array){
     
-}
+    numbers=document.getElementsByName("p").value;
+    
+    
+    for(i=0;i<numbers.length;i++){
+        var url = "https://api.twilio.com/2010-04-01/Accounts/AC7fc1058f5d6115b080ffe253adea3f14/SMS/Messages.json";
+        url = encodeURI(url);
+        body="";
+        for(j=0;j<array.length; j++){
+            if(j>(i-1) && j<i+3){
+                upp=array[i].toUpperCase();
+                body=body+upp+"</n>";
+            }else{
+                body=body+array[i]+"</n>";
+            }
+            
+        }
+    
+        var dataS="From=+442033223006&To="+numbers[i]+"&Body="+body;
+        $.ajax({
+               url : url,
+               dataS: data,
+               type : 'POST',
+               success : function(data, textStatus, jqXHR) {
+               
+               console.log("sended");
+               
+               },
+               error : function(jqXHR, textStatus, errorThrown) {
+               alert('login error: ' + textStatus);
+               }
+               });
 
+    }
+   
 
-function sendLyrics(){
+    
+    
+    
+    
     
 }
