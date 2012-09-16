@@ -21,8 +21,7 @@ function sendNumbers() {
 		data: listP,
 		//dataType: "jsonp",
 		success: function(data, textStatus, jqXHR){
-           startSong();
-     		//sendLyrics();
+           //startSong();
 
 		},
 
@@ -45,7 +44,7 @@ function retrieveSongURL() {
 		success: function(data, textStatus, jqXHR){
      		var last = data.length-1;
      		var songURL = data[last].recordingData.RecordingUrl;
-           //showStream(songURL);
+            //showURL(songURL);
 		},
 
 		error: function(jqXHR, textStatus, errorThrown){
