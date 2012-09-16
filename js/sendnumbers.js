@@ -44,7 +44,7 @@ function retrieveSongURL() {
 		success: function(data, textStatus, jqXHR){
      		var last = data.length-1;
      		var songURL = data[last].recordingData.RecordingUrl;
-            //showURL(songURL);
+           $("#linkSong").append("<a href='"+songURL+"'> Your song is ready! </a>");
 		},
 
 		error: function(jqXHR, textStatus, errorThrown){
