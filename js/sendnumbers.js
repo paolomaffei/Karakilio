@@ -45,6 +45,7 @@ function retrieveSongURL() {
 		success: function(data, textStatus, jqXHR){
      		var last = data.length-1;
      		var songURL = data[last].recordingData.RecordingUrl;
+           //showStream(songURL);
 		},
 
 		error: function(jqXHR, textStatus, errorThrown){
