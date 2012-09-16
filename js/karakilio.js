@@ -269,7 +269,7 @@ function startSong(){
     var playlist = new models.Playlist();
     playlist.add(track);
     var playerView = new views.Player();
-    playerView.track = null; // Don't play the track right away
+    playerView.track = track; // Don't play the track right away
     playerView.context = playlist;
     
     /* Pass the player HTML code to the #player <div /> */
