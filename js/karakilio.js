@@ -122,11 +122,9 @@ function fillMusixMatch(id) {
 				$("#lyricsMTest").empty();
 				$("#lyricsMTest").append('<div><p>');
            var lyrics=data.message.body.subtitle.subtitle_body;
-           var lyricsArray=lyrics.split("[");
-           alert(lyricsArray[1]);
-				$("#lyricsMTest").append(data.message.body.subtitle.subtitle_body);
+				$("#lyricsMTest").append(lyrics);
 				$("#lyricsMTest").append('</div>');
-           showLyrics(lyricsArray);
+           showLyrics(lyrics);
 			} else {
 				alert("data null");
 
@@ -140,75 +138,45 @@ function fillMusixMatch(id) {
 
 }
 
+function convert(input) {
+    var parts = input.split(':'),
+        minutes = +parts[0],
+        seconds = +parts[1];
+    return (minutes * 60 + seconds).toFixed(3);
+}
+
+function lyricsToKRL(timings2) {
+	console.log(timings2);
+	var split2 = timings2.split(/\r\n|\r|\n/);
+	var max = parseInt(split2.length);
+	var arr = [];
+	for (i in split2) {
+		var line = parseInt(i);
+		var lineArr = [];
+		// push [start, end, [[0, "lyric line"]]]
+		var splitLine = split2[line].split(/\]/);
+		var time = parseFloat(convert(splitLine[0].substring(1)));
+		// push the start time
+		lineArr.push(time);
+		// push the end time
+		if (line+1 == max) {
+			lineArr.push(time+10); // assume the last line is 10 seconds long
+		} else {
+			lineArr.push(parseFloat(convert(split2[line+1].split(/\]/)[0].substring(1))));
+	}
+		var lyricArray = [[0, splitLine[1]]];
+		// push the lyric
+		lineArr.push(lyricArray);
+		arr.push(lineArr);
+	}
+
+	var timings = RiceKaraoke.simpleTimingToTiming(arr);
+	return timings;
+}
+
 function showLyrics(lyricsData) {
-    
-    var krly='[';
-    
-    //Get start time for first line
-  
-    line=lyricsData[1];
-    var time=lyricsData[1].split("]");
-    var timeAr=time[0].split(':');
-    min=timeAr[0];
-    var secs=timeAr[1].split('.');
-    
-    sec=parseInt(secs[0])+parseInt(min*60);
-  
-    var startTime=''+sec+'.'+secs[1];
-    
-    //Get finish time for first line
-    
-    var time2=lyricsData[2].split("]");
-    var timeAr2=time2[0].split(':');
-    min2=timeAr2[0];
-    var secs2=timeAr2[1].split('.');
-    
-    sec2=parseInt(secs2[0])+parseInt(min2*60);
-    
-    var startTimeNext=''+sec2+'.'+secs2[1];
-    var i=2;
-    line=lyricsData[2];
-    krly=' ['+ startTime+' , '+startTimeNext +', [ [ 0, '+time[1]+' ] ] ]';
-    
-    //Do the same for the rest of the lines
-    
- while(typeof(line) != 'undefined'){
-     
-     var time=line.split("]");
-     var timeAr=time[0].split(':');
-     min=timeAr[0];
-     var secs=timeAr[1].split('.');
-     
-     sec=parseInt(secs[0])+parseInt(min*60);
-     
-     var startTime=''+sec+'.'+secs[1];
-     if(typeof(lyricsData[i+1])!='undefined'){
-     
-     var time2=lyricsData[i+1].split("]");
-     var timeAr2=time2[0].split(':');
-     min2=timeAr2[0];
-     var secs2=timeAr2[1].split('.');
-     
-     sec2=parseInt(secs2[0])+parseInt(min2*60);
-     
-         var startTimeNext=''+sec2+'.'+secs2[1];}
-     else{
-         sec=sec+3;
-         var startTimeNext=''+sec+'.'+secs[1];
-     }
-      krly=krly+', ['+ startTime +', '+startTimeNext +', [ [ 0, '+time[1]+' ] ]]';
-     i++;
-     line=lyricsData[i];
-    }
-    krly=krly+']';
-    //alert(krly);
-    krlyO= [ krly ];
-    
-    console.log(krlyO);
+    var timings = lyricsToKRL(lyricsData);
 	var numDisplayLines = 2;
-	var timings = RiceKaraoke.simpleTimingToTiming(krlyO); // Simple KRL -> KRL
-    //[ [ 1.35, 3.07,
-    //[ [ 0, "What " ], [ 0.07, "is " ], [ 0.28, "love" ] ] ] ]
 	var karaoke = new RiceKaraoke(timings);
 	var renderer = new SimpleKaraokeDisplayEngine('karaoke-display',
 			numDisplayLines);
