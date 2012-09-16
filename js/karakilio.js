@@ -255,7 +255,7 @@ function sendLyrics(){
 
 
 
-function startsong(){
+function startSong(){
     
     showLyrics(lyricsSong);
     
