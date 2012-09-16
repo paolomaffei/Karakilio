@@ -85,7 +85,7 @@ function getLyricsTest(title) {
 	//var title = $("#songName").val()
 	title = encodeURI(title);
 	var url_search = "http://api.musixmatch.com/ws/1.1/track.search?apikey=8199f8199755eeaca66a70ce0263110e&q_track="
-    + title + "&f_has_subtitles=1&format=jsonp&callback=rr";
+    + title + "&f_has_lyrics=1&format=jsonp&callback=rr";
     
 	$.ajax({
            url : url_search,
@@ -96,6 +96,7 @@ function getLyricsTest(title) {
            var id = data.message.body.track_list[0].track.track_id;
            console.log(id);
            fillMusixMatch(id);
+           getLyricsToSend(id);
            }
            },
            error : function(jqXHR, textStatus, errorThrown) {

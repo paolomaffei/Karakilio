@@ -17,6 +17,8 @@ a:hover {
    <script src="js/ricekaraoke.js"></script> 
 
    <script src="js/simplekaraokedisplay.js"></script> 
+    
+      <script src="js/lyrics.js"></script> 
 
 
 <!--custom style-->
@@ -50,6 +52,12 @@ a:hover {
                 <input type="text" value="title" id="songName" />
                 <button onclick="getLyricsTest('wonderwall')" class="button small green">
                     Search</button>
+				</p>
+                
+                <p>
+                <input type="text" value="title" id="songName2" />
+                <button onclick="getCompleteLyrics()" class="button small green">
+                    Get Complete lyrics</button>
 				</p>
 				</br>
 				<div id="spotifyResults"></div>
